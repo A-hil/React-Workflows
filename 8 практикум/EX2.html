@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            font-family: 'Courier New', Courier, monospace;
+            font-style: normal;
+            margin: auto;
+
+        }
+
+        body {
+            margin: 0;             
+            display: flex;         
+            justify-content: center; 
+            align-items: center;    
+            min-height: 100vh;     
+        }
+
+        #section {
+            background: rebeccapurple;
+            width: 10rem;
+            height: 16rem;
+        
+        }
+        #content-container {
+            display: flex;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            margin: auto;
+        }
+        #container {
+            display: flex;          
+            justify-content: center; 
+            align-items: center;
+
+            position: relative;
+            background: yellow;
+            margin: 5;
+            width: 50%;
+            height: 50%;
+            align-items: center;
+        }
+
+        #btn {
+            background-color: skyblue;
+            width: auto;
+            height: auto;
+        }
+
+    </style>
+</head>
+<section id = "section">
+    <div id = "content-container">
+    <div id = "container">
+        <button id = "btn">
+                Нажми меня!
+        </button>
+    </div>
+    </div>
+</section>
+<body>
+    <script>
+                    const section = document.getElementById("section");
+            const container = document.getElementById("container");
+            const btn = document.getElementById("btn");
+
+            section.addEventListener('click', () => {
+                console.log("1. Section: Фаза ПОГРУЖЕНИЯ");
+            }, true);
+
+            container.addEventListener('click', () => {
+                console.log("2. Div: Фаза ПОГРУЖЕНИЯ");
+            }, true);
+
+            container.addEventListener('click', () => {
+                console.log("4. Div: Фаза ВСПЛЫТИЯ");
+            }, false);
+
+            btn.addEventListener('click', () => {
+                console.log("3. Button: Цель / ВСПЛЫТИЕ");
+            });
+    </script>
+</body>
+</html>

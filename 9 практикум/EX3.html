@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function delayedResponse(message, delay) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                console.log(`Задержка: ${delay} мс. Сообщение: ${message}`);
+                resolve();
+                }, delay);
+            });
+            }           
+            delayedResponse("Привет через 2 секунды!", 2000);
+    </script>
+</body>
+</html>

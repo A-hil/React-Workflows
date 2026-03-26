@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+        #timer-display{
+            display: flex;
+            height: auto;
+            width: 100%;
+            align-items: center;
+            text-align: center;
+            height: false;
+        }
+        .is-hidden {
+    display: none !important;
+}
+        .is-visible{
+            display: block;
+        }
+
+    </style>
+</head>
+<h1>Секретный Таймер</h1>
+<div id="timer-display" style="font-size: 24px; color: aqua; margin-bottom: 15px;">
+    Обратный отсчет: <span id="seconds">0</span> сек.
+
+</div>
+<div id="mg" class="is-hidden"> 
+    <p>Сообщение</p>
+</div>
+<body>   
+    <script>
+         let secondsCount = 0;
+         const mg = document.querySelector('#mg'); 
+         const timerText = document.querySelector('#timer-display');
+    const secondsElement = document.querySelector('#seconds');
+    const randomStop = Math.floor(Math.random() * (10 - 5 + 1)) + 5;
+    const timer = setInterval(() => {
+        secondsCount++; 
+        secondsElement.textContent = secondsCount;
+
+        if (secondsCount == randomStop){
+            clearInterval(timer);
+            timerText.classList.add('is-hidden');
+                    mg.classList.remove('is-hidden'); 
+        mg.classList.add('is-visible');
+        }
+    }, 1000);
+    </script>
+</body>
+</html>

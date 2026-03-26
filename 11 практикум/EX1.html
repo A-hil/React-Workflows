@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+async function asyncTimer () {
+    alert('Начало');
+    let timeInput = prompt(`Введите время в секундах`);
+    let ms = parseInt(timeInput) * 1000; 
+    if (isNaN(ms) || ms <= 0) {
+        alert("Введите корректное число");
+        return;
+    }
+    await wait(ms); 
+    alert(`Прошло ${timeInput} секунд, таймер завершен`);
+}
+asyncTimer();
+
+    </script>
+</body>
+</html>

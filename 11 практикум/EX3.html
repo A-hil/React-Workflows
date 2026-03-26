@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+           const createAsyncTask = (id, delay) => {
+    return new Promise((resolve) => {
+        console.log(`Задача ${id} началась (займёт ${delay}мс)`);
+        setTimeout(() => {
+            const result = `Результат задачи ${id}`;
+            console.log(`Задача ${id} завершена`);
+            resolve(result);
+        }, delay);
+    });
+};
+
+    async function asyncQueue(tasksToRun) {
+        console.log("Запуск последовательных задач");
+        const results = [];
+
+        for (const task of tasksToRun) {
+            results.push(await task());
+        }
+
+        console.log("Все задачи выполнены!");
+        console.log("Результаты:", results);
+        return results;
+    }
+
+    let tasks = [
+        () => createAsyncTask(1, 1000),
+        () => createAsyncTask(2, 500),
+        () => createAsyncTask(3, 1500)
+    ];
+    asyncQueue(tasks);
+
+
+    </script>
+</body>
+</html>

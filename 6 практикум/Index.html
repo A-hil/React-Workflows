@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Манипуляции</title>
+    <style>
+        #box {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        
+        #dynamic-box {
+            width: 200px;
+            height: 100px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #333;
+            font-weight: bold;
+        }
+        
+        #list-container {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .list-item {
+            padding: 5px;
+            margin: 3px 0;
+            background-color: #f0f0f0;
+            border-left: 4px solid #4CAF50;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .removing {
+            animation: fadeOut 0.5s;
+            opacity: 0;
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        
+        .task {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>DOM Манипуляции - 5 задач</h1>
+    
+    <!-- Задача 1 -->
+    <div class="task">
+        <h2>Задача 1: Изменение текстового содержимого</h2>
+        <div id="content">Привет, мир!</div>
+        <button onclick="changeText()">Изменить текст</button>
+    </div>
+    
+    <!-- Задача 2 -->
+    <div class="task">
+        <h2>Задача 2: Изменение атрибутов</h2>
+        <a href="https://www.google.com" id="link" target="_blank">Google</a>
+        <button onclick="changeLink()">Изменить ссылку</button>
+        <p>Текущий href: <span id="current-href">https://www.google.com</span></p>
+    </div>
+    
+    <!-- Задача 3 -->
+    <div class="task">
+        <h2>Задача 3: Изменение стилей</h2>
+        <div id="box">Я изменю стиль!</div>
+        <button onclick="changeStyles()">Изменить стиль</button>
+        <button onclick="resetStyles()">Сбросить стиль</button>
+    </div>
+    
+    <!-- Задача 4 -->
+    <div class="task">
+        <h2>Задача 4: Смена фона каждые 2 секунды</h2>
+        <div id="dynamic-box">Мой фон меняется</div>
+        <button onclick="startColorChange()">Запустить смену цвета</button>
+        <button onclick="stopColorChange()">Остановить смену цвета</button>
+        <p>Текущий цвет: <span id="current-color">#FFFFFF</span></p>
+    </div>
+    
+    <!-- Задача 5 -->
+    <div class="task">
+        <h2>Задача 5: Создание и удаление элементов</h2>
+        <div id="list-container">
+            <p>Элементы списка (живут 5 секунд):</p>
+            <ul id="dynamic-list"></ul>
+        </div>
+        <button onclick="startCreatingItems()">Начать создание элементов</button>
+        <button onclick="stopCreatingItems()">Остановить создание</button>
+        <p>Создано элементов: <span id="counter">0</span></p>
+        <p>Текущее количество: <span id="current-count">0</span></p>
+    </div>
+
+    <script>
+        // ===== ЗАДАЧА 1 =====
+        function changeText() {
+            const contentDiv = document.getElementById('content');
+            contentDiv.textContent = 'Hello, World!';
+            contentDiv.style.color = 'green';
+            contentDiv.style.fontWeight = 'bold';
+        }
+
+        // ===== ЗАДАЧА 2 =====
+        function changeLink() {
+            const link = document.getElementById('link');
+            const currentHrefSpan = document.getElementById('current-href');
+            
+            // Меняем ссылку
+            link.href = 'https://www.example.com';
+            link.textContent = 'Example.com';
+            
+            // Обновляем отображение текущего href
+            currentHrefSpan.textContent = link.href;
+            currentHrefSpan.style.color = 'blue';
+        }
+
+        // ===== ЗАДАЧА 3 =====
+        function changeStyles() {
+            const box = document.getElementById('box');
+            box.style.color = 'blue';
+            box.style.fontSize = '24px';
+            box.style.backgroundColor = '#f0f8ff';
+            box.style.padding = '15px';
+            box.style.border = '2px solid blue';
+            box.textContent = 'Стиль изменен!';
+        }
+        
+        function resetStyles() {
+            const box = document.getElementById('box');
+            box.style = ''; // Сбрасываем все стили
+            box.textContent = 'Я изменю стиль!';
+        }
+
+        // ===== ЗАДАЧА 4 =====
+        let colorInterval;
+        
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        
+        function startColorChange() {
+            const box = document.getElementById('dynamic-box');
+            const colorSpan = document.getElementById('current-color');
+            
+            if (colorInterval) {
+                clearInterval(colorInterval);
+            }
+            
+            // Меняем цвет сразу
+            changeBackgroundColor();
+            
+            // Устанавливаем интервал
+            colorInterval = setInterval(changeBackgroundColor, 2000);
+            
+            function changeBackgroundColor() {
+                const randomColor = getRandomColor();
+                box.style.backgroundColor = randomColor;
+                colorSpan.textContent = randomColor;
+                colorSpan.style.color = randomColor;
+                
+                // Меняем цвет текста для контраста
+                const r = parseInt(randomColor.substr(1,2), 16);
+                const g = parseInt(randomColor.substr(3,2), 16);
+                const b = parseInt(randomColor.substr(5,2), 16);
+                
+                // Вычисляем яркость для определения цвета текста
+                const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+                box.style.color = brightness > 128 ? 'black' : 'white';
+            }
+        }
+        
+        function stopColorChange() {
+            if (colorInterval) {
+                clearInterval(colorInterval);
+                colorInterval = null;
+            }
+        }
+
+        // ===== ЗАДАЧА 5 =====
+        let creationInterval;
+        let itemCounter = 0;
+        let items = [];
+        
+        function startCreatingItems() {
+            if (creationInterval) {
+                clearInterval(creationInterval);
+            }
+            
+            creationInterval = setInterval(createListItem, 1000);
+            
+            // Создаем первый элемент сразу
+            createListItem();
+        }
+        
+        function stopCreatingItems() {
+            if (creationInterval) {
+                clearInterval(creationInterval);
+                creationInterval = null;
+            }
+        }
+        
+        function createListItem() {
+            const list = document.getElementById('dynamic-list');
+            const counterSpan = document.getElementById('counter');
+            const currentCountSpan = document.getElementById('current-count');
+            
+            // Создаем новый элемент
+            const li = document.createElement('li');
+            itemCounter++;
+            li.className = 'list-item';
+            li.id = 'item-' + itemCounter;
+            li.textContent = `Элемент ${itemCounter} (создан в ${new Date().toLocaleTimeString()})`;
+            
+            // Добавляем в список
+            list.appendChild(li);
+            items.push(li);
+            
+            // Обновляем счетчики
+            counterSpan.textContent = itemCounter;
+            currentCountSpan.textContent = items.length;
+            
+            // Удаляем через 5 секунд
+            setTimeout(() => {
+                removeListItem(li);
+            }, 5000);
+        }
+        
+        function removeListItem(li) {
+            // Добавляем анимацию удаления
+            li.classList.add('removing');
+            
+            // Удаляем после анимации
+            setTimeout(() => {
+                const index = items.indexOf(li);
+                if (index > -1) {
+                    items.splice(index, 1);
+                }
+                if (li.parentNode) {
+                    li.parentNode.removeChild(li);
+                }
+                
+                // Обновляем счетчик текущих элементов
+                document.getElementById('current-count').textContent = items.length;
+            }, 500);
+        }
+        
+        // Автоматический запуск некоторых функций при загрузке
+        window.onload = function() {
+            // Запускаем смену цвета для задачи 4
+            startColorChange();
+            
+            // Запускаем создание элементов для задачи 5
+            startCreatingItems();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fixed Event Propagation</title>
+    <style>
+        body {
+            margin: 0;             
+            display: flex;         
+            justify-content: center; 
+            align-items: center;    
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        #container {
+            display: flex;          
+            justify-content: center; 
+            align-items: center;
+            background: yellow;
+            width: 200px;
+            height: 200px;
+            border: 2px solid rebeccapurple;
+        }
+
+        #btn {
+            background-color: skyblue;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <button id="btn">Нажми меня!</button>
+    </div>
+
+    <script>
+        const container = document.getElementById("container");
+        const btn = document.getElementById("btn");
+        container.addEventListener('click', () => {
+            console.log("DIV: Я поймал событие!"); 
+        }, false);
+
+        btn.addEventListener('click', (event) => {
+            console.log("BUTTON: Клик был тут. Останавливаю движение!");
+            event.stopPropagation(); 
+        });
+    </script>
+</body>
+</html>

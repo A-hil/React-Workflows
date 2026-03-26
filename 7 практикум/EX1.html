@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Propagation Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #outerDiv {
+            background-color: greenyellow;
+            width: 300px;
+            height: 300px;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        #innerDiv {
+            background-color: orange;
+            width: 200px;
+            height: 150px;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        button {
+            margin: 5px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Event Propagation Demo</h1>
+    <p>Нажмите на элементы и наблюдайте вывод в консоль (F12 → Console).</p>
+    
+    <div id="outerDiv">
+        <h3>Внешний DIV (родитель)</h3>
+        <button id="outerButton">Кликни меня!</button>
+        
+        <div id="innerDiv">
+            <h3>Внутренний DIV (дочерний)</h3>
+            <button id="innerButton">Кликни меня!</button>
+        </div>
+    </div>
+    <script>
+
+        const outerDiv = document.getElementById('outerDiv');
+        const innerDiv = document.getElementById('innerDiv');
+        const outerButton = document.getElementById('outerButton');
+        const innerButton = document.getElementById('innerButton');
+
+        function logEvent(elementName, event) {
+            console.log(`Клик на: ${elementName}`);
+            console.log(`  Target: ${event.target.id || event.target.tagName}`);
+            console.log(`  Current Target: ${event.currentTarget.id || event.currentTarget.tagName}`);
+            console.log(`  Phase: ${event.eventPhase === 1 ? 'CAPTURING' : 
+                                    event.eventPhase === 2 ? 'AT TARGET' : 
+                                    'BUBBLING'}`);
+        }
+
+        outerDiv.addEventListener('click', function(event) {
+            logEvent('Внешний DIV (родитель)', event);
+        });
+
+        innerDiv.addEventListener('click', function(event) {
+            logEvent('Внутренний DIV (дочерний)', event);
+             event.stopPropagation();
+            console.log('stopPropagation() вызван! Событие не пойдет дальше.');
+        });
+
+        outerButton.addEventListener('click', function(event) {
+            logEvent('Кнопка во внешнем DIV', event);
+        });
+
+        innerButton.addEventListener('click', function(event) {
+              logEvent('Кнопка в самом глубоком DIV', event);
+            event.stopPropagation(); 
+            console.log('>>> stopPropagation() вызван на кнопке!');
+            console.log('---');
+        });
+
+        deepestButton.addEventListener('click', function(event) {
+          
+        });
+
+        outerDiv.addEventListener('click', function(event) {
+            console.log('Внешний DIV - фаза ПЕРЕХВАТА ');
+        }, true); 
+        console.log('Демонстрация распространения событий готова!');
+        console.log('Кликайте по разным элементам и наблюдайте за консолью.');
+    </script>
+</body>
+</html>

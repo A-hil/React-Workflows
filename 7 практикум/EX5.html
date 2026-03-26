@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;    
+    min-height: 100vh;     
+}
+
+.zoom-img {
+    width: 200px;
+    transition: transform 0.3s ease; 
+    cursor: pointer;
+}
+
+.zoom-img:hover {
+    transform: scale(1.5);
+}
+        #img{
+            position: absolute;
+            
+            margin: auto;
+            width: 10rem;
+            height: auto;
+        }
+        .is-fixed {
+    transform: scale(1.5) !important;
+    cursor: default; 
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+    <img id = "img" class="zoom-img" src="https://images.unsplash.com/vector-1768891290447-daa3e46f545d?q=80&w=795&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="image">
+    </div>
+    <script>
+const img = document.querySelector('#img');
+let hoverCount = 0;
+
+img.addEventListener('mouseenter', () => {
+    if (!img.classList.contains('is-fixed')) {
+        hoverCount++;
+        console.log("Наведение номер: " + hoverCount);
+
+        if (hoverCount >= 3) {
+            img.classList.add('is-fixed');
+            console.log("Изображение зафиксировано!");
+        }
+    }
+});
+    </script>
+</body>
+</html>

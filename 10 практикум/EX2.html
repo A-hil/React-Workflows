@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+function raceToFinish(promises) {
+    return Promise.race(promises)
+        .then((value) => {
+            console.log("Первый выполненный элемент:", value);
+            return value; 
+        })
+        .catch((error) => {
+            console.error("Первый завершенный (с ошибкой):", error);
+            throw error;
+        });
+}
+const slowPromise = new Promise((resolve) => setTimeout(resolve, 3000, 'Медленный ответ'));
+const fastPromise = new Promise((resolve) => setTimeout(resolve, 1000, 'Быстрый ответ'));
+
+raceToFinish([slowPromise, fastPromise]);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered Round Button</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center; 
+            align-items: center;     
+            background-color: #f0f0f0;
+        }
+
+        #btn {
+            background-color: aqua;
+            border: none;
+            cursor: pointer;
+
+            width: 100px;           
+            height: 100px;          
+            border-radius: 50%;    
+            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        #btn:hover {
+            background-color: #00ffff; 
+            transform: scale(1.05);    
+            transition: 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <button type="button" id="btn">Click me!</button>
+    <script>
+        var i = 0;
+             const button = document.querySelector('#btn');
+            
+    button.addEventListener('click', () => {
+        
+        i++;
+        console.log('Кнопка нажата!');
+        console.log('\nЦвет изменен!');
+        let chek = i %2;
+        if(chek == 1){
+            button.style.backgroundColor = 'pink';
+        } else{
+            button.style.backgroundColor = "#00ffff";
+        }
+        
+    });
+    </script>
+</body>
+</html>

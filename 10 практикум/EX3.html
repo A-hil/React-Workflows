@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function getFirstSuccessful(promises) {
+    return Promise.any(promises)
+        .then((value) => {
+            console.log("Первый выполненный элемент:", value);
+            return value; 
+        })
+        .catch((error) => {
+            console.error("Первый завершенный (с ошибкой):", error);
+            throw error;
+        });
+    }
+
+            const promise1 = Promise.reject('Ошибка 1');
+        const promise2 = Promise.reject('Ошибка 2');
+        const promise3 = new Promise((resolve) => setTimeout(resolve, 500, 'Успех!'));
+        getFirstSuccessful([promise1, promise2, promise3]);
+    </script>
+</body>
+</html>

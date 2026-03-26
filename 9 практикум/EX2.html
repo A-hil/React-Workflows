@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+const myPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        reject(new Error('Это намеренная ошибка через 1 секунду!'));
+    }, 1000);
+});
+myPromise
+    .catch((error) => {
+        console.error('Поймана ошибка:', error.message);
+    })
+    .finally(() => {
+        console.log('Операция завершена.');
+    });
+    </script>
+</body>
+</html>
